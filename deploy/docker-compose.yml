@@ -1,0 +1,19 @@
+# JAMigos — servidor próprio
+#
+#   docker compose up -d        sobe e mantém no ar (reinicia sozinho no boot)
+#   docker compose logs -f      acompanha
+#   docker compose down         desliga
+#
+services:
+  jamigos:
+    build: ..
+    container_name: jamigos
+    restart: unless-stopped
+    ports:
+      - "8787:8080"
+    environment:
+      # Senha opcional da sala. Deixe vazio para servidor aberto.
+      OJ_TOKEN: ""
+      OJ_DATA: "/dados/salas.json"
+    volumes:
+      - ./dados:/dados

@@ -1,0 +1,20 @@
+# Porta de entrada do JAMigos.
+# O Caddy emite e renova o certificado HTTPS sozinho e repassa WebSocket
+# sem configuração extra. Troque o domínio abaixo pelo seu.
+#
+#   sudo cp Caddyfile /etc/caddy/Caddyfile
+#   sudo systemctl reload caddy
+
+jamigos.SEUDOMINIO.com.br {
+    encode gzip
+    reverse_proxy localhost:8787 {
+        health_uri /health
+        health_interval 30s
+    }
+    log {
+        output file /var/log/caddy/jamigos.log {
+            roll_size 10mb
+            roll_keep 5
+        }
+    }
+}
